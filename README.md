@@ -1,6 +1,11 @@
 # hgcheck
 
-`hgcheck` (Homograph Guard) is a CLI tool designed to detect Unicode homograph attacks, confusing characters, mixed scripts, and hidden Bidi control characters. It can scan text strings or wrap commands to ensure arguments are safe before execution.
+`hgcheck` (Homograph Guard) is a CLI tool designed to detect Unicode homograph attacks, confusing characters, mixed scripts, and hidden Bidi control characters. It can scan text strings or wrap commands to ensure arguments are safe before execution. This idea was given to me by am x post, however I canot find that post anymore. I wanted to make this in rust to help me become more familar.
+
+# Why
+
+In agentic workflows, documentation must be treated as untrusted input because it is part of the supply chain, not a trusted boundary: commands, URLs, and package names are copied from repos, blogs, forums, mirrors, translations, and LLM summaries, any of which can introduce visually deceptive Unicode characters. Agents do not visually inspect text, so a single homograph introduced anywhere along that path can silently change what gets executed, making Unicode normalization and confusable detection necessary even when the source appears authoritative.
+
 
 ## Features
 
