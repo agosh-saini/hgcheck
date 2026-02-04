@@ -1,5 +1,5 @@
 [package]
-name = "hg"
+name = "hgcheck"
 version = "0.1.0"
 edition = "2024"
 
