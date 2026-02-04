@@ -157,6 +157,14 @@ fn script_bucket(c: char) -> &'static str {
     }
 }
 
+// ---- Non-ASCII detection -----
+// Expected behavior:
+// - Return true if the string contains non-ASCII characters
+// - Return false otherwise
+fn contains_non_ascii(s: &str) -> bool {
+    s.chars().any(|c| !c.is_ascii())
+}
+
 // ---- Mixed scripts detection -----
 // Expected behavior:
 // - Return None if no mixed scripts
@@ -204,10 +212,16 @@ fn scan_string(s: &str) -> (Vec<Finding>, SectionReport) {
     // ---- Skeleton detection -----
     //  Skeleton is a normalization form that is used to normalize strings to a standard form
     if skeleton != s {
+        let non_ascii = contains_non_ascii(s);
+
         findings.push(Finding {
-            level: Level::Warn,
-            kind: "skeleton_changes",
-            detail: format!("Skeleton changes input: {} -> {}", s, skeleton),
+            level: if non_ascii { Level::Warn } else { Level::Info },
+            kind: if non_ascii {
+                "unicode_skeleton_change"
+            } else {
+                "ascii_skeleton_ambiguity"
+            },
+            detail: format!("'{}' visually maps to '{}'", s, skeleton),
         });
     }
 
